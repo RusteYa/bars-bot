@@ -1,0 +1,148 @@
+{
+  'ok': True,
+  'result': [
+    {
+      'update_id': 788078594,
+      'message': {
+        'message_id': 9,
+        'from': {
+          'id': 214537372,
+          'is_bot': False,
+          'first_name': 'Victoria',
+          'last_name': 'Giniatullina',
+          'username': 'Mondays52',
+          'language_code': 'ru'
+        },
+        'chat': {
+          'id': 214537372,
+          'first_name': 'Victoria',
+          'last_name': 'Giniatullina',
+          'username': 'Mondays52',
+          'type': 'private'
+        },
+        'date': 1545160077,
+        'text': '/start',
+        'entities': [
+          {
+            'offset': 0,
+            'length': 6,
+            'type': 'bot_command'
+          }
+        ]
+      }
+    },
+    {
+      'update_id': 788078595,
+      'message': {
+        'message_id': 10,
+        'from': {
+          'id': 336221006,
+          'is_bot': False,
+          'first_name': 'Rustem',
+          'last_name': 'Yamikov',
+          'username': 'RustemY',
+          'language_code': 'ru'
+        },
+        'chat': {
+          'id': 336221006,
+          'first_name': 'Rustem',
+          'last_name': 'Yamikov',
+          'username': 'RustemY',
+          'type': 'private'
+        },
+        'date': 1545160095,
+        'text': '/start',
+        'entities': [
+          {
+            'offset': 0,
+            'length': 6,
+            'type': 'bot_command'
+          }
+        ]
+      }
+    },
+    {
+      'update_id': 788078596,
+      'message': {
+        'message_id': 11,
+        'from': {
+          'id': 336221006,
+          'is_bot': False,
+          'first_name': 'Rustem',
+          'last_name': 'Yamikov',
+          'username': 'RustemY',
+          'language_code': 'ru'
+        },
+        'chat': {
+          'id': 336221006,
+          'first_name': 'Rustem',
+          'last_name': 'Yamikov',
+          'username': 'RustemY',
+          'type': 'private'
+        },
+        'date': 1545160181,
+        'text': '/start',
+        'entities': [
+          {
+            'offset': 0,
+            'length': 6,
+            'type': 'bot_command'
+          }
+        ]
+      }
+    },
+    {
+      'update_id': 788078597,
+      'message': {
+        'message_id': 12,
+        'from': {
+          'id': 336221006,
+          'is_bot': False,
+          'first_name': 'Rustem',
+          'last_name': 'Yamikov',
+          'username': 'RustemY',
+          'language_code': 'ru'
+        },
+        'chat': {
+          'id': 336221006,
+          'first_name': 'Rustem',
+          'last_name': 'Yamikov',
+          'username': 'RustemY',
+          'type': 'private'
+        },
+        'date': 1545160184,
+        'text': '/help',
+        'entities': [
+          {
+            'offset': 0,
+            'length': 5,
+            'type': 'bot_command'
+          }
+        ]
+      }
+    },
+    {
+      'update_id': 788078598,
+      'message': {
+        'message_id': 13,
+        'from': {
+          'id': 152922019,
+          'is_bot': False,
+          'first_name': 'Айрат',
+          'last_name': 'Байбуров',
+          'username': 'deep_ex_sense',
+          'language_code': 'ru'
+        },
+        'chat': {
+          'id': 152922019,
+          'first_name': 'Айрат',
+          'last_name': 'Байбуров',
+          'username': 'deep_ex_sense',
+          'type': 'private'
+        },
+        'date': 1545161975,
+        'text': 'test'
+      }
+    }
+  ]
+}
