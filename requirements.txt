@@ -1,0 +1,4 @@
+python_telegram_bot==6.1.0
+django_telegrambot==1.0.1
+Django==2.0.3
+telegram==0.0.1
