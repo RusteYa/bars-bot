@@ -1,7 +1,11 @@
 import telebot
 import constants
 
+
+
+
 bot = telebot.TeleBot(constants.TELEBOT_TOKEN)
+telebot.apihelper.proxy = {'https': '35.231.54.121:8080'}
 
 @bot.message_handler(commands=['start'])
 def handle_start(message):
