@@ -5,8 +5,11 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardMar
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
 
 from bot import constants
+from bot.models import User
 
 logger = logging.getLogger(__name__)
+
+user = User()
 
 
 def start(bot, update):
@@ -27,36 +30,42 @@ def url(bot, update):
 
 
 def echo(bot, update):
-    if update.message.text == ".net" or update.message.text == "Python" or update.message.text == "Другой язык"\
-            or update.message.text == "Аналитик" or update.message.text == "Другое":
-        update.message.reply_text('Введите ФИО')
-        update.message.reply_text('Введите телефон')
-        update.message.reply_text('Введите почту')
-        update.message.reply_text('Введите ВУЗ')
-        update.message.reply_text('Введите курс')
-        update.message.reply_text('Введите Факультет')
+    message = update.message
+    if message.text == ".net" or message.text == "Python" or message.text == "Другой язык" \
+            or message.text == "Аналитик" or message.text == "Другое":
+        message.reply_text('Введите ФИО')
+        message.reply_text('Введите телефон')
+        message.reply_text('Введите почту')
+        message.reply_text('Введите ВУЗ')
+        message.reply_text('Введите курс')
+        message.reply_text('Введите Факультет')
 
-    if update.message.text == "Разработчик":
+    if message.text == "Разработчик":
         user_markup = [['.net', 'Python', 'Другой язык']]
-        update.message.reply_text('Выбери язык',
-                                  reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
+        message.reply_text('Выбери язык',
+                           reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
 
-    if update.message.text == "Принять":
+    if message.text == "Принять":
+        user = User(chat_id=message.chat.id,
+                    first_name=message.chat.first_name,
+                    last_name=message.chat.last_name)
+        user.save()
         user_markup = [['Разработчик', 'Аналитик', 'Другое']]
 
-        update.message.reply_text('Хочешь попасть к нам в команду? Заполни анкету!',
-                                  reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
-        update.message.reply_text('Кем хочешь работать?',
-                                  reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
+        message.reply_text('Хочешь попасть к нам в команду? Заполни анкету!',
+                           reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
+        message.reply_text('Кем хочешь работать?',
+                           reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
 
-    if update.message.text == "Я готов пройти опрос!":
+    if message.text == "Я готов пройти опрос!":
+        user = User
         user_markup = [['Принять']]
         all_files = {constants.doc1}
-        update.message.reply_text('Тогда прочитай и прими согласие на обработку персональных данных',
-                                  reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
+        message.reply_text('Тогда прочитай и прими согласие на обработку персональных данных',
+                           reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
         for file in all_files:
             doc = open(file, 'rb')
-            bot.send_document(update.message.chat_id, doc)
+            bot.send_document(message.chat_id, doc)
             doc.close()
 
 
