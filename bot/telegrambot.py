@@ -27,7 +27,8 @@ def url(bot, update):
 
 
 def echo(bot, update):
-    if update.message.text == ".net" or update.message.text == "Python" or update.message.text == "Другой язык":
+    if update.message.text == ".net" or update.message.text == "Python" or update.message.text == "Другой язык"\
+            or update.message.text == "Аналитик" or update.message.text == "Другое":
         update.message.reply_text('Введите ФИО')
         update.message.reply_text('Введите телефон')
         update.message.reply_text('Введите почту')
