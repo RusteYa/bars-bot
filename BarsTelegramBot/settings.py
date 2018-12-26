@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from bot.constants import TELEBOT_TOKEN
@@ -33,7 +34,7 @@ DJANGO_TELEGRAMBOT = {
     # NB: if use polling mode you must provide to run
     # a management command that starts a worker
 
-    'WEBHOOK_SITE': 'https://fc4a2557.ngrok.io',
+    'WEBHOOK_SITE': 'https://bars-bot.herokuapp.com',
     'WEBHOOK_PREFIX': '/prefix',  # (Optional[str]) # If this value is specified,
     # a prefix is added to webhook url
 
@@ -86,7 +87,7 @@ DJANGO_TELEGRAMBOT = {
 
 }
 
-ALLOWED_HOSTS = ['fc4a2557.ngrok.io', '127.0.0.1', ]
+ALLOWED_HOSTS = ['bars-bot.herokuapp.com', '127.0.0.1', ]
 
 # Application definition
 
@@ -109,6 +110,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'BarsTelegramBot.urls'
@@ -176,4 +178,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
