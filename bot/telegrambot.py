@@ -24,10 +24,12 @@ def save_speciality(message, speciality):
 def start(bot, update):
     message = update.message
     if User.objects.filter(chat_id=message.chat_id).__len__() == 0:
+        print(message.chat.id, message.chat.first_name, message.chat.last_name)
         user = User(chat_id=message.chat.id,
                     first_name=message.chat.first_name,
                     last_name=message.chat.last_name)
         user.save()
+        print("User created")
 
     all_files = {constants.photo1, constants.photo2, constants.photo3}
     user_markup = [['Я готов пройти опрос!']]
