@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import django_heroku
+import logging.config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from bot.constants import TELEBOT_TOKEN
@@ -178,7 +179,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-
+LOGGING_CONFIG = None
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            # exact format is not important, this is the minimum information
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+    },
+    'loggers': {
+    # root logger
+        '': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+    },
+})
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
