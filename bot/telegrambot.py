@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_user(chat_id):
-    users = User.objects.filter(user_id=chat_id)
+    users = User.objects.filter(chat_id=chat_id)
     return users.__getitem__(0)
 
 
@@ -22,6 +22,13 @@ def save_speciality(message, speciality):
 
 
 def start(bot, update):
+    message = update.message
+    if User.objects.filter(chat_id=message.chat_id).__len__() == 0:
+        user = User(chat_id=message.chat.id,
+                    first_name=message.chat.first_name,
+                    last_name=message.chat.last_name)
+        user.save()
+
     all_files = {constants.photo1, constants.photo2, constants.photo3}
     user_markup = [['Я готов пройти опрос!']]
     update.message.reply_text('БАРС Груп приветствует тебя!',
@@ -112,7 +119,6 @@ def echo(bot, update):
         user.save()
         message.reply_text('Введите ФИО')
 
-
     if text == "Другое":
         user.question = 'На каких языках Вы программируете?'
         user.save()
@@ -130,10 +136,6 @@ def echo(bot, update):
                            reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
 
     if message.text == "Принять":
-        user = User(user_id=message.chat.id,
-                    first_name=message.chat.first_name,
-                    last_name=message.chat.last_name)
-        user.save()
         user_markup = [['Разработчик', 'Аналитик', 'Другая специальность']]
 
         message.reply_text('Хочешь попасть к нам в команду? Заполни анкету!',
@@ -150,7 +152,6 @@ def echo(bot, update):
             doc = open(file, 'rb')
             bot.send_document(message.chat_id, doc)
             doc.close()
-
 
 
 def error(bot, update, error):
