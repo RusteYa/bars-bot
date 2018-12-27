@@ -1,4 +1,4 @@
-TELEBOT_TOKEN = '335977431:AAF32pbQ6KKgoJnvWW41yLa6ozanL9z7zWY'
+TELEBOT_TOKEN = '768010442:AAHItr6E0TYmNlTiXp2HHIFbV41KnSCS_vk'
 MAIN_URL = f'https://api.telegram.org/bot{TELEBOT_TOKEN}'
 STICKER_ID = 'CAADAgADggIAAlwohgj91172rg2WVAI'
 photo1 = 'staticfiles/Photos/welcome_img.jpg'

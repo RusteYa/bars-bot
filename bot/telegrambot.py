@@ -9,7 +9,16 @@ from bot.models import User
 
 logger = logging.getLogger(__name__)
 
-user = User()
+
+def get_user(chat_id):
+    users = User.objects.filter(user_id=chat_id)
+    return users.__getitem__(0)
+
+
+def save_speciality(message, speciality):
+    user = get_user(message.chat.id)
+    user.specialty = speciality
+    user.save()
 
 
 def start(bot, update):
@@ -31,26 +40,101 @@ def url(bot, update):
 
 def echo(bot, update):
     message = update.message
-    if message.text == ".net" or message.text == "Python" or message.text == "Другой язык" \
-            or message.text == "Аналитик" or message.text == "Другое":
-        message.reply_text('Введите ФИО')
-        message.reply_text('Введите телефон')
+    user = get_user(message.chat.id)
+    text = message.text
+    question = user.__getattribute__('question')
+
+    if question == 'schedule':
+        user.schedule = text
+        user.question = 'schedule'
+        user.save()
+        url(bot, update)
+
+    if question == 'time_work':
+        user.time_work = text
+        user.question = 'schedule'
+        user.save()
+        message.reply_text('Удобный график работы?')
+
+    if question == 'skills':
+        user.skills = text
+        user.question = 'time_work'
+        user.save()
+        message.reply_text('Когда готовы приступить к работе?')
+
+    if question == 'study':
+        user.study = text
+        user.question = 'skills'
+        user.save()
+        message.reply_text('Укажите ключевые ИТ навыки:')
+
+    if question == 'email':
+        user.email = text
+        user.question = 'study'
+        user.save()
+        message.reply_text('Введите место учебы (ВУЗ, курс и факультет)')
+
+    if question == 'phone':
+        user.phone = text
+        user.question = 'email'
+        user.save()
         message.reply_text('Введите почту')
-        message.reply_text('Введите ВУЗ')
-        message.reply_text('Введите курс')
-        message.reply_text('Введите Факультет')
+
+    if question == 'fio':
+        user.fio = text
+        user.save()
+        user.question = 'phone'
+        message.reply_text('Введите телефон')
+
+    if question == 'Введите Вашу специальность':
+        user.question = 'fio'
+        user.save()
+        save_speciality(message, message.text)
+        message.reply_text('Введите ФИО')
+
+    if question == 'На каких языках Вы программируете?':
+        user.programm_language = text
+        user.save()
+
+    if question == 'fio':
+        user.fio = text
+        user.save()
+
+    if text == ".net" or text == "Python":
+        user.programm_language = text
+        user.question = 'fio'
+        user.save()
+        message.reply_text('Введите ФИО')
+
+    if text == "Аналитик":
+        user.question = 'fio'
+        user.specialty = 'Аналитик'
+        user.save()
+        message.reply_text('Введите ФИО')
+
+
+    if text == "Другое":
+        user.question = 'На каких языках Вы программируете?'
+        user.save()
+        message.reply_text(user.question)
+
+    if text == "Другая специальность":
+        user.question = 'Введите Вашу специальность'
+        user.save()
+        message.reply_text('Введите Вашу специальность')
 
     if message.text == "Разработчик":
-        user_markup = [['.net', 'Python', 'Другой язык']]
+        save_speciality(message, "Разработчик")
+        user_markup = [['.net', 'Python', 'Другое']]
         message.reply_text('Выбери язык',
                            reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
 
     if message.text == "Принять":
-        user = User(chat_id=message.chat.id,
+        user = User(user_id=message.chat.id,
                     first_name=message.chat.first_name,
                     last_name=message.chat.last_name)
         user.save()
-        user_markup = [['Разработчик', 'Аналитик', 'Другое']]
+        user_markup = [['Разработчик', 'Аналитик', 'Другая специальность']]
 
         message.reply_text('Хочешь попасть к нам в команду? Заполни анкету!',
                            reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
@@ -58,7 +142,6 @@ def echo(bot, update):
                            reply_markup=ReplyKeyboardMarkup(user_markup, one_time_keyboard=True))
 
     if message.text == "Я готов пройти опрос!":
-        user = User
         user_markup = [['Принять']]
         all_files = {constants.doc1}
         message.reply_text('Тогда прочитай и прими согласие на обработку персональных данных',
@@ -67,6 +150,7 @@ def echo(bot, update):
             doc = open(file, 'rb')
             bot.send_document(message.chat_id, doc)
             doc.close()
+
 
 
 def error(bot, update, error):
