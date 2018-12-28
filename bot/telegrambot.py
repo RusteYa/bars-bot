@@ -4,7 +4,7 @@ from django_telegrambot.apps import DjangoTelegramBot
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, MessageHandler, Filters, ConversationHandler
 
-from bot import constants
+from bot import constants, google_sheet
 from bot.models import User, Question, Answer, Choices
 
 logger = logging.getLogger(__name__)
@@ -46,6 +46,7 @@ def url(bot, update):
     user_markup = [[InlineKeyboardButton(text='Наш сайт', url='https://life.bars.group/')]]
     update.message.reply_text("Узнай больше о нас, на сайте:  ",
                               reply_markup=InlineKeyboardMarkup(user_markup, one_time_keyboard=True))
+    google_sheet.send_to_google_sheet(get_user(update.message.chat.id))
     return ConversationHandler.END
 
 
