@@ -23,12 +23,18 @@ def save_speciality(message, speciality):
 
 def start(bot, update):
     message = update.message
+    print(message.chat.id, message.chat.first_name, message.chat.last_name)
+
     if User.objects.filter(chat_id=message.chat_id).__len__() == 0:
-        print(message.chat.id, message.chat.first_name, message.chat.last_name)
         user = User(chat_id=message.chat.id,
                     first_name=message.chat.first_name,
                     last_name=message.chat.last_name)
         user.save()
+    else:
+        current_user = User.objects.filter(chat_id=message.chat_id).first()
+        Answer.objects.filter(user=current_user).delete()
+        current_user.current_question = None
+
     print("User logined")
 
     all_files = {constants.photo1, constants.photo2, constants.photo3}
