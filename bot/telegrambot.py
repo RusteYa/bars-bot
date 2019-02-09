@@ -27,10 +27,11 @@ def start(bot, update):
 
     if User.objects.filter(chat_id=message.chat_id).__len__() != 0:
         User.objects.filter(chat_id=message.chat_id).delete()
-        user = User(chat_id=message.chat.id,
-                    first_name=message.chat.first_name,
-                    last_name=message.chat.last_name)
-        user.save()
+
+    user = User(chat_id=message.chat.id,
+                first_name=message.chat.first_name,
+                last_name=message.chat.last_name)
+    user.save()
 
     print("User logined")
 
